@@ -11,7 +11,7 @@ function Home() {
     fetch(urls)
       .then((res) => res.json())
       .then((urls) => setthreads(urls))
-      .catch(() => console.log("eror"));
+      .catch(() => console.log("error"));
   }, []);
 
   const list = threads.map((thread) => (<li>{thread.title}</li>))

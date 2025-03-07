@@ -1,18 +1,11 @@
-import React,{ useState,useEffect } from 'react';
-import ReactDOM from 'react-dom';
-import { BrowserRouter as Router, Route,Routes,useParams} from 'react-router-dom';
+import React from 'react';
+import { BrowserRouter as Router, Route,Routes} from 'react-router-dom';
 
 import Home from './Home';
 import NewThreads from './newthreads';
 import Threads from './threads';
 
-
-
 const App = () => {
-
-
-
-
   return (
     <div>
     <Router>
