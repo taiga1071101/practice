@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react'
+import { Link } from 'react-router-dom';
 import './App.css'
 import Header from './Header';
 
@@ -14,7 +15,7 @@ function Home() {
       .catch(() => console.log("error"));
   }, []);
 
-  const list = threads.map((thread) => (<li>{thread.title}</li>))
+  const list = threads.map((thread) => (<Link to={`/threads/${thread.id}`}>{thread.title}<br /></Link>))
 
   return (
     <>

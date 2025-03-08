@@ -8,11 +8,24 @@ function Posts() {
   const [posts, setPosts] = useState([]);
   const [loading, setLoading] = useState(true);
 
-  
+  // 該当スレッドのポストをフェッチ
+  const fetchPosts = async () => {
+    try {
+      setLoading(true);
+      const response = await fetch(`https://railway.bulletinboard.techtrain.dev/threads/${thread_id}/posts?offset=0`);
+      const data = await response.json();
+      setPosts(data.posts);
+    } catch (error) {
+      console.error('Failed to fetch posts:', error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
   const onCreatePost = () =>{
-    let inputTitle = document.getElementById("post").value;
-    const body = {"post":inputTitle};
-    const url = `https://railway.bulletinboard.techtrain.dev/threads/${thread_id}` +`/posts`;
+    const inputPost = document.getElementById("post").value;
+    const body = {"post":inputPost};
+    const url = `https://railway.bulletinboard.techtrain.dev/threads/${thread_id}/posts`;
     fetch(url, {
       method: 'POST',
       headers: {
@@ -23,29 +36,12 @@ function Posts() {
     document.getElementById("post").value = "";
     alert("投稿が完了しました")
 
-    useEffect(()=>{
-      onCreatePost();
-    },[]);
+    fetchPosts();
   };
   
   useEffect(() => {
-    // APIなどからデータをフェッチする
-    const fetchPosts = async () => {
-      try {
-        setLoading(true);
-        // 実際のAPIエンドポイントを使ってデータを取得
-        const response = await fetch(`https://railway.bulletinboard.techtrain.dev/threads/${thread_id}` + `/posts?offset=0`);
-        const data = await response.json();
-        setPosts(data.posts);
-      } catch (error) {
-        console.error('Failed to fetch posts:', error);
-      } finally {
-        setLoading(false);
-      }
-    };
-
     fetchPosts();
-  }, []); // thread_idが変更されるたびに再度データを取得
+  }, []); // 初期表示時に一度だけポストをフェッチしてくる。
 
 
   
